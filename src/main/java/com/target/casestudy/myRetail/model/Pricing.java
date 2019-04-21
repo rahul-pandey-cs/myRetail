@@ -1,11 +1,11 @@
-package com.target.casestudy.myRetail.beans;
+package com.target.casestudy.myRetail.model;
 
 import lombok.Data;
 
 @Data
 public class Pricing {
-	
-	int value;
-	
+
+	String value;
+
 	String currency_code;
 }
