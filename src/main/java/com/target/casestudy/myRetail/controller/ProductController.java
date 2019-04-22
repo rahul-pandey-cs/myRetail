@@ -23,11 +23,11 @@ import com.target.casestudy.myRetail.util.Constants;
 
 @RestController
 public class ProductController {
-    
+
 	private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 	protected static final String API_PRODUCT = "products/";
 	protected static final String API_PRODUCT_DATASOURCE = "productsDataSource/";
-	
+
 	private final ProductService productService;
 
 	@Autowired
@@ -37,9 +37,9 @@ public class ProductController {
 
 	@Autowired
 	private RestTemplate restTemplate;
-	
+
 	@Autowired
-    ProductRepository repository;
+	ProductRepository repository;
 
 	@Autowired
 	private Environment env;
@@ -52,18 +52,18 @@ public class ProductController {
 		resultVal.getBody().setCurrentPrice(productPrice);
 		return resultVal;
 	}
-	
+
 	@PostMapping(ProductController.API_PRODUCT + "{id}")
 	public ResponseEntity<Product> createProduct(@PathVariable final int id, @RequestBody Product product) {
+		productService.updateProduct(id,product);
 		repository.save(product);
 		return new ResponseEntity<Product>(HttpStatus.CREATED);
 	}
-	
+
 	@GetMapping(ProductController.API_PRODUCT_DATASOURCE + "{id}")
 	public ResponseEntity<Product> getProductFromDataSource(@PathVariable final int id, @RequestBody Product product) {
 		Product productValue = repository.findById(String.valueOf(id));
 		return new ResponseEntity<Product>(productValue, HttpStatus.ACCEPTED);
 	}
-	
 
 }

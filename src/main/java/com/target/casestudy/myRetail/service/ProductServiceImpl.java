@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.target.casestudy.myRetail.model.Pricing;
+import com.target.casestudy.myRetail.model.Product;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -35,6 +36,17 @@ public class ProductServiceImpl implements ProductService {
 		List<Pricing> pricingList = new ArrayList<Pricing>();
 		pricingList.add(pricingJson);
 		return pricingList;
+	}
+
+	@Override
+	public void updateProduct(int id, Product product) {
+		List<Pricing> price;
+		price = product.getCurrentPrice();
+
+		if (!price.isEmpty()) {
+			price.get(0).setId(String.valueOf(id));
+		}
+		product.setCurrentPrice(price);
 	}
 
 }
