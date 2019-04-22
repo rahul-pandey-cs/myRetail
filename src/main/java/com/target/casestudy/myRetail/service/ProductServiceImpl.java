@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,7 @@ import com.target.casestudy.myRetail.model.Pricing;
 public class ProductServiceImpl implements ProductService {
 
 	@Override
-	public Pricing getPricingDetails() {
+	public List<Pricing> getPricingDetails() {
 
 		Charset charset = StandardCharsets.UTF_8;
 		final InputStream inputStream = currentThread().getContextClassLoader().getResourceAsStream("pricing.json");
@@ -30,7 +32,9 @@ public class ProductServiceImpl implements ProductService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return pricingJson;
+		List<Pricing> pricingList = new ArrayList<Pricing>();
+		pricingList.add(pricingJson);
+		return pricingList;
 	}
 
 }
