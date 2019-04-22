@@ -7,18 +7,18 @@ import java.util.Map;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
-import lombok.AccessLevel;
 
 @Data
 @Entity
@@ -39,7 +39,8 @@ public class Product implements Serializable{
 	String name;
 
     @Column(name = "CurrentPrice")
-    @OneToMany(mappedBy="id", fetch = FetchType.LAZY, targetEntity=Pricing.class)
+    @OneToMany(fetch = FetchType.LAZY, targetEntity=Pricing.class)
+    @JoinColumn(name="id") 
 	List<Pricing> currentPrice;
 
 	@SuppressWarnings("unchecked")
