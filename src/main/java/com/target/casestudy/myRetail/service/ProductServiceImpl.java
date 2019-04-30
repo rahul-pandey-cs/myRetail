@@ -20,7 +20,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.target.casestudy.myRetail.Exception.ProductException;
-import com.target.casestudy.myRetail.controller.ProductController;
+
 import com.target.casestudy.myRetail.model.Pricing;
 import com.target.casestudy.myRetail.model.Product;
 import com.target.casestudy.myRetail.util.Constants;
@@ -66,7 +66,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Product getProductFromAPI(int id) {
-		
+
 		Product resultVal = new Product();
 
 		try {

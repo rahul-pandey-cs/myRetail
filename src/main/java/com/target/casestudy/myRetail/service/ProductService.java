@@ -8,9 +8,9 @@ import com.target.casestudy.myRetail.model.Product;
 public interface ProductService {
 
 	List<Pricing> getPricingDetails();
+	
+	void updateProduct(int id, Product product);
 
 	Product getProductFromAPI(int id);
-
-	void updateProduct(int id, Product product);
 
 }
