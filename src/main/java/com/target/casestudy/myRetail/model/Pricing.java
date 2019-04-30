@@ -38,4 +38,9 @@ public class Pricing implements Serializable{
 	@Column(name = "Value")
 	String value;
 	
+	@Override
+    public String toString() {
+        return "pricing(currencyCode=" + currencyCode + ", value=" + value + ")";
+    }
+	
 }
