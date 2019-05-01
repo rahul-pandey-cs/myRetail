@@ -1,15 +1,9 @@
 package com.target.casestudy.myRetail.service;
 
-import static java.lang.Thread.currentThread;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +15,6 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.target.casestudy.myRetail.Exception.ProductException;
-
 import com.target.casestudy.myRetail.model.Pricing;
 import com.target.casestudy.myRetail.model.Product;
 import com.target.casestudy.myRetail.util.Constants;

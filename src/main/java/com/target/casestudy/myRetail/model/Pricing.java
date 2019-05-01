@@ -4,10 +4,10 @@ import java.io.Serializable;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,8 +37,7 @@ public class Pricing implements Serializable{
 	@JsonIgnore
 	int priceid;
 	
-	@ManyToOne(cascade = CascadeType.REFRESH, targetEntity = Product.class) 
-	@JoinColumn(name = "Id")
+	@Column(name = "ProductID")
 	@JsonIgnore
 	String productId;
 	
@@ -48,9 +47,10 @@ public class Pricing implements Serializable{
 	@Column(name = "Value")
 	String value;
 	
-//	@Override
-//    public String toString() {
-//        return "pricing(currencyCode=" + currencyCode + ", value=" + value + ")";
-//    }
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ProductID", referencedColumnName = "Id", nullable = false, updatable = false, insertable = false)
+	@JsonIgnore
+	Product productpricing;
+
 	
 }

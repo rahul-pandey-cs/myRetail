@@ -13,12 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
-import com.target.casestudy.myRetail.Repository.PriceRepository;
-import com.target.casestudy.myRetail.Repository.ProductRepository;
 import com.target.casestudy.myRetail.model.Pricing;
 import com.target.casestudy.myRetail.model.Product;
+import com.target.casestudy.myRetail.repository.PriceRepository;
+import com.target.casestudy.myRetail.repository.ProductRepository;
 import com.target.casestudy.myRetail.service.ProductService;
 
 import io.swagger.annotations.Api;
@@ -58,15 +57,15 @@ public class ProductController {
 	@PostMapping(ProductController.API_PRODUCT + "{id}")
 	public ResponseEntity<Product> createProduct(@PathVariable final int id, @RequestBody Product product) {
 		productService.updateProduct(id, product);
-	//	priceRepository.save(productService.getSinglePricing(product));
 		repository.save(product);
-		return new ResponseEntity<Product>(HttpStatus.CREATED);
+		logger.info("Product created successfully");
+		return new ResponseEntity<Product>(product,HttpStatus.CREATED);
 	}
 
 	@GetMapping(ProductController.API_PRODUCT_DATASOURCE + "{id}")
-	public ResponseEntity<Product> getProductFromDataSource(@PathVariable final int id, @RequestBody Product product) {
+	public ResponseEntity<?> getProductFromDataSource(@PathVariable final int id) {
 		Product productValue = repository.findById(String.valueOf(id));
-		return new ResponseEntity<Product>(productValue, HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(productValue, HttpStatus.ACCEPTED);
 	}
 
 }

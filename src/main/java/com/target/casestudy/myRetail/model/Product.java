@@ -11,7 +11,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -40,8 +39,7 @@ public class Product implements Serializable {
 	@Setter(AccessLevel.NONE)
 	String name;
 
-	@Column(name = "CurrentPrice")
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "productId", cascade = CascadeType.ALL, targetEntity = Pricing.class)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "productpricing", cascade = CascadeType.ALL)
 	List<Pricing> currentPrice;
 
 	@SuppressWarnings("unchecked")
