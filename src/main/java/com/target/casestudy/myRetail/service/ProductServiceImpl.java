@@ -19,6 +19,10 @@ import com.target.casestudy.myRetail.model.Pricing;
 import com.target.casestudy.myRetail.model.Product;
 import com.target.casestudy.myRetail.util.Constants;
 
+/**
+ * @author Rahul Pandey
+ *
+ */
 @Service
 public class ProductServiceImpl implements ProductService {
 

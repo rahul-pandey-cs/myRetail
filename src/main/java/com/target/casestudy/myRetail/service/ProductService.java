@@ -6,6 +6,10 @@ import java.util.List;
 import com.target.casestudy.myRetail.model.Pricing;
 import com.target.casestudy.myRetail.model.Product;
 
+/**
+ * @author Rahul Pandey
+ *
+ */
 public interface ProductService {
 
 	List<Pricing> getPricingDetails() throws IOException;

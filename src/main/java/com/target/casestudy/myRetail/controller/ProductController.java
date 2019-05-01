@@ -23,6 +23,10 @@ import com.target.casestudy.myRetail.service.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+/**
+ * @author Rahul Pandey
+ *
+ */
 @Api(tags = { "Product" })
 @RestController
 public class ProductController {

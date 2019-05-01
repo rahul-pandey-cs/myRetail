@@ -3,6 +3,10 @@ package com.target.casestudy.myRetail.Exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpStatusCodeException;
 
+/**
+ * @author Rahul Pandey
+ *
+ */
 public class CommonException extends HttpStatusCodeException {
 
 	private static final long serialVersionUID = 1687971530824341758L;

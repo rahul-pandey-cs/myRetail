@@ -19,6 +19,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
+/**
+ * @author Rahul Pandey
+ *
+ */
 @Data
 @Entity
 @Table(name = "Pricing")

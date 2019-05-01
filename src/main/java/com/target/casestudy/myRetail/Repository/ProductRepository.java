@@ -5,6 +5,10 @@ import org.springframework.stereotype.Repository;
 
 import com.target.casestudy.myRetail.model.Product;
 
+/**
+ * @author Rahul Pandey
+ *
+ */
 @Repository
 public interface ProductRepository extends CrudRepository<Product, Product> {
 
