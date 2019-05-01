@@ -1,5 +1,6 @@
 package com.target.casestudy.myRetail.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.target.casestudy.myRetail.Repository.PriceRepository;
 import com.target.casestudy.myRetail.Repository.ProductRepository;
 import com.target.casestudy.myRetail.model.Pricing;
 import com.target.casestudy.myRetail.model.Product;
@@ -40,9 +42,12 @@ public class ProductController {
 	@Autowired
 	ProductRepository repository;
 
+	@Autowired
+	PriceRepository priceRepository;
+
 	@ApiOperation(value = "Get the product details for the supplied product id")
 	@GetMapping(ProductController.API_PRODUCT + "{id}")
-	public ResponseEntity<Product> getProduct(@PathVariable final int id) {
+	public ResponseEntity<Product> getProduct(@PathVariable final int id) throws IOException {
 
 		Product product = productService.getProductFromAPI(id);
 		List<Pricing> productPrice = productService.getPricingDetails();
@@ -53,6 +58,7 @@ public class ProductController {
 	@PostMapping(ProductController.API_PRODUCT + "{id}")
 	public ResponseEntity<Product> createProduct(@PathVariable final int id, @RequestBody Product product) {
 		productService.updateProduct(id, product);
+	//	priceRepository.save(productService.getSinglePricing(product));
 		repository.save(product);
 		return new ResponseEntity<Product>(HttpStatus.CREATED);
 	}

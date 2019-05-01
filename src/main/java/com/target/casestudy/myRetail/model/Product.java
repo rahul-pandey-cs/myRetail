@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,24 +24,24 @@ import lombok.Setter;
 @Data
 @Entity
 @Table(name = "Product")
-@Access(value=AccessType.FIELD)
-public class Product implements Serializable{
-    
+@Access(value = AccessType.FIELD)
+public class Product implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2050137481113252459L;
 
 	@Id
+	@Column(name = "Id")
 	String id;
-   
-    @Column(name = "Name")
+
+	@Column(name = "Name")
 	@Setter(AccessLevel.NONE)
 	String name;
 
-    @Column(name = "CurrentPrice")
-    @OneToMany(fetch = FetchType.LAZY, targetEntity=Pricing.class)
-    @JoinColumn(name="id") 
+	@Column(name = "CurrentPrice")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "productId", cascade = CascadeType.ALL, targetEntity = Pricing.class)
 	List<Pricing> currentPrice;
 
 	@SuppressWarnings("unchecked")

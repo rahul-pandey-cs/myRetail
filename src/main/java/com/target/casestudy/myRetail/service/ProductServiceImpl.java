@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.target.casestudy.myRetail.Exception.ProductException;
 
@@ -34,23 +35,48 @@ public class ProductServiceImpl implements ProductService {
 	private RestTemplate restTemplate;
 
 	@Override
-	public List<Pricing> getPricingDetails() {
+	public List<Pricing> getPricingDetails() throws IOException {
 
-		Charset charset = StandardCharsets.UTF_8;
-		final InputStream inputStream = currentThread().getContextClassLoader().getResourceAsStream("pricing.json");
+		final String PRICING_DATA_LOCATION = "/pricing.json";
 
-		Pricing pricingJson = null;
-		ObjectMapper objectMapper = new ObjectMapper();
-
+		ObjectMapper mapper = new ObjectMapper();
+		TypeReference<List<Pricing>> typeReference = new TypeReference<List<Pricing>>() {
+		};
+		InputStream inputStream = null;
 		try {
-			pricingJson = objectMapper.readValue(IOUtils.toString(inputStream, charset), Pricing.class);
-		} catch (IOException e) {
-			logger.error("IOException occured at getPricingDetails");
-			e.printStackTrace();
+
+			inputStream = TypeReference.class.getResourceAsStream(PRICING_DATA_LOCATION);
+			List<Pricing> listOfPricing = mapper.readValue(inputStream, typeReference);
+			return listOfPricing;
+
+		} catch (IOException ex) {
+			logger.error("loading of pricing data failed");
+			throw ex;
+		} finally {
+			try {
+				inputStream.close();
+			} catch (IOException | NullPointerException e) {
+				logger.info(e.getMessage());
+			}
 		}
-		List<Pricing> pricingList = new ArrayList<Pricing>();
-		pricingList.add(pricingJson);
-		return pricingList;
+
+		// Charset charset = StandardCharsets.UTF_8;
+		// final InputStream inputStream =
+		// currentThread().getContextClassLoader().getResourceAsStream("pricing.json");
+		//
+		// Pricing pricingJson = null;
+		// ObjectMapper objectMapper = new ObjectMapper();
+		//
+		// try {
+		// pricingJson = objectMapper.readValue(IOUtils.toString(inputStream, charset),
+		// Pricing.class);
+		// } catch (IOException e) {
+		// logger.error("IOException occured at getPricingDetails");
+		// e.printStackTrace();
+		// }
+		// List<Pricing> pricingList = new ArrayList<Pricing>();
+		// pricingList.add(pricingJson);
+		// return pricingList;
 	}
 
 	@Override
@@ -59,15 +85,27 @@ public class ProductServiceImpl implements ProductService {
 		price = product.getCurrentPrice();
 
 		if (!price.isEmpty()) {
-			price.get(0).setId(String.valueOf(id));
+			price.get(0).setProductId(String.valueOf(id));
 		}
 		product.setCurrentPrice(price);
+	}
+
+	public Pricing getSinglePricing(Product product) {
+
+		Pricing pricing = null;
+		List<Pricing> price;
+		price = product.getCurrentPrice();
+		if (!price.isEmpty()) {
+			pricing = price.get(0);
+		}
+
+		return pricing;
 	}
 
 	@Override
 	public Product getProductFromAPI(int id) {
 
-		Product resultVal = new Product();
+		Product resultVal = null;
 
 		try {
 			resultVal = restTemplate
